@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="http://plugins.jquery.com/files/jquery.dump.js.txt" type="text/javascript"></script>
+<script src="../../../src/core/Cache.js"></script>
+
+
+  
+</head>
+<body>
+    <pre id="results"></pre>
+    <pre id="dump"></pre>
+    <script>
+        
+        cache = new Cache();
+            
+        cache.onCompleteAll = function() {
+            console.log('all resources loaded')
+            $("#dump").append(cache.find('ipes1').data + '<br />');
+            $("#dump").append(cache.find('ipes2').data + '<br />');
+            $("#dump").append(cache.find('book').data + '<br />');
+            $("#dump").append(cache.find('logo').data + '<br />');
+        }
+
+        cache.onComplete = function(resource) {
+            console.log('resource: ' + resource.name + 'loaded')
+            $('#results').append('Resource: ' + resource + ' loaded<br />');
+        }
+        
+        cache.onError = function(resource) {
+            $('#results').append('Error loading resource: ' + resource + '<br />');
+        }
+        
+        
+        cache.get({
+           content: [
+               {
+                   url: ['http://ipes-spain.com/assets/images/properties/80/7.JPG'],
+                   name: 'ipes1'
+               },
+               {
+                   url: ['http://ipes-spain.com/assets/ipes_images/slider1.jpg'],
+                   name: 'ipes2'
+               }
+           ] 
+        });
+        
+
+        
+        
+        
+        
+        
+      
+
+    </script>
+    
+</body>
+</html>
