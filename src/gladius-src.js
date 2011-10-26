@@ -12,6 +12,7 @@ define( function ( require ) {
         Transform = require( './core/component/Transform' ),
         Scheduler = require( './core/Scheduler' ),
         Text = require( './core/resource/Text' ),
+        Cache = require( './core/Cache' ),
 
     Gladius, i, args,
 
@@ -100,12 +101,13 @@ define( function ( require ) {
                     Component: Component,
                     Resource: null,
                     Scene: Scene( this ),
+                    Cache: Cache( this ),
                     component: {
-                        Transform: Transform( this )
+                        Transform: Transform( this ),
                     },
                     resource: {
                         Text: Text( this )
-                    }
+                    },
                 },
                 graphics: {
                     component: {},
