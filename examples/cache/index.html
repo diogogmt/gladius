@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cache Example</title>
+
+    <!-- To test the dist file, uncomment the line below and comment out
+         the src/gladius.js script. -->
+    <!-- script src="../dist/gladius.js"></script -->    
+	<script src="../../src/gladius.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+  </head>
+  <body>
+  	<h1>Cache example</h1>
+  	
+  	
+  	<div id="results"></div>
+  	<div id="dump"></div>
+  	
+		<script>
+			var engine = null,
+					cache = null
+			;
+			
+			gladius.create( { debug: true }, function( instance ) {       
+		    engine = instance;
+		  	cache = new engine.core.Cache();
+		  	
+		  	
+		    
+		    cache.get({
+	     		content : [
+	     			{
+	 						url: [
+	 	  					'http://ipes-spain.com/assets/ipes_images/slider1212121212.jpg'
+								, 'http://www.tooft.com/wp-content/uploads/2010/03/The_Firefox_by_djog.jpg'
+	 						],
+	 						name: 'ffLarge'
+	 					},
+	 					{
+	     				url: ['http://ipes-spain.com/assets/images/properties/411/1.jpg'],
+	 						name: 'ipes1'
+	 					},
+	 					{
+	     				url: [
+	     	  			'http://ipes-spain.com/assets/ipes_images/slider1212121212.jpg'
+								, 'http://ipes-spain.com/assets/ipes_images/slider1.jpg'
+	 						],
+	 						name: 'ipes2'
+	 					},
+	 					{
+	     				url: ['boss_loop.ogg'],
+	 						name: 'boss'
+	 					},
+	 					{
+	     				url: ['level1.mp3'],
+	 						name: 'level1'
+	     			}
+					],
+		 			onComplete : function(resource) {
+		    		$('#results').append(resource.name + ' loaded<br />');
+						if (resource.name === "boss") {
+							cache.find(resource.name).data.play();
+						}
+		
+						if (resource.name === "level1") {
+							cache.find(resource.name).data.play();
+						}
+		
+						$("#dump").append(cache.find(resource.name).data);
+						$("#dump").append('<br /><br />');
+					},
+					onCompleteAll : function() {
+			   		$('#results').append('All resources loaded<br />');
+			   		cache.clear({name: 'ipes1'});
+			   		cache.clear();
+					},
+					onError : function(resource) {
+				  	$('#results').append('Error loading resource: ' + resource.name + '<br />');
+			    }
+				});
+			  	
+		  });
+	  
+		</script>
+
+  </body>
+</html>
